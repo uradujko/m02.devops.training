@@ -15,6 +15,7 @@ auto_cancel:
 global_job_config:
   prologue:
     commands:
+      - sem-version python 3.12
       - checkout
       - 'export PATH=$PATH:/home/semaphore/.local/bin'
       - mkdir -p .pip_cache
@@ -66,7 +67,7 @@ blocks:
             - cd 4-e2e
             - pip install --cache-dir .pip_cache -r requirements.txt
             - cache store
-            - nohup python3.10 app.py &
+            - nohup python app.py &
             - sleep 3
             - pytest test_e2e.py -v
             - cd ..
@@ -82,8 +83,6 @@ blocks:
         - name: 5-test-reports
           commands:
             - cd 5-test-reports
-            - python -m venv venv
-            - source venv/bin/activate
             - pip install --cache-dir .pip_cache -r requirements.txt
             - pytest test_math_operations.py -v
             - pytest -junitxml=reports.xml
