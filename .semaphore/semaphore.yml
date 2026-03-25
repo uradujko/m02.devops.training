@@ -12,16 +12,19 @@ auto_cancel:
     when: branch != 'main'
   queued:
     when: branch = 'main'
+global_job_config:
+  prologue:
+    commands:
+      - checkout
+      - pip install pytest requests flask coverage locust
+      - 'PATH=$PATH:/home/semaphore/.local/bin'
 blocks:
   - name: Install Dependencies
     dependencies: []
     task:
       jobs:
         - name: Prepare environment
-          commands:
-            - checkout
-            - 'pip install pytest requests flask coverage locust '
-            - cache store
+          commands: []
       prologue:
         commands:
           - checkout
@@ -32,5 +35,4 @@ blocks:
       jobs:
         - name: 'Job #1'
           commands:
-            - cache restore
             - 'cd 1-tdd && python -m pytest test_factorial.py -v '
