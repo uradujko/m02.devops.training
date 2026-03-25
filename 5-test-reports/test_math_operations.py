@@ -26,24 +26,24 @@ class TestMathOperations(unittest.TestCase):
         self.assertEqual(add(-1, -1), -2)
 
     def test_addition_fail(self):
-        # Intentionally failing: 2 + 3 should be 5, not 6
-        self.assertEqual(add(2, 3), 6)
+        # Fixed: 2 + 3 = 5
+        self.assertEqual(add(2, 3), 5)
 
     def test_subtraction(self):
         # Expected to pass: 10 - 5 = 5
         self.assertEqual(subtract(10, 5), 5)
 
     def test_subtraction_fail(self):
-        # Intentionally failing: 10 - 5 should be 5, not 4
-        self.assertEqual(subtract(10, 5), 4)
+        # Fixed: 10 - 5 = 5
+        self.assertEqual(subtract(10, 5), 5)
 
     def test_multiplication(self):
         # Expected to pass: 3 * 4 = 12
         self.assertEqual(multiply(3, 4), 12)
 
     def test_multiplication_fail(self):
-        # Intentionally failing: 3 * 4 should be 12, not 11
-        self.assertEqual(multiply(3, 4), 11)
+        # Fixed: 3 * 4 = 12
+        self.assertEqual(multiply(3, 4), 12)
 
     def test_division(self):
         # Expected to pass: 10 / 2 = 5
@@ -66,9 +66,9 @@ class TestMathOperations(unittest.TestCase):
         self.assertEqual(result, 11)
 
     def test_complex_operation_fail(self):
-        # Intentionally failing: expecting the result to be 12 instead of 11
+        # Fixed: (2*3) + (10 - (20/4)) = 6 + 5 = 11
         result = add(multiply(2, 3), subtract(10, divide(20, 4)))
-        self.assertEqual(result, 12)
+        self.assertEqual(result, 11)
 
 if __name__ == '__main__':
     unittest.main()
