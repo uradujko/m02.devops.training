@@ -16,8 +16,8 @@ global_job_config:
   prologue:
     commands:
       - checkout
+      - 'export PATH=$PATH:/home/semaphore/.local/bin'
       - pip install pytest requests flask coverage locust
-      - 'PATH=$PATH:/home/semaphore/.local/bin'
 blocks:
   - name: Install Dependencies
     dependencies: []
