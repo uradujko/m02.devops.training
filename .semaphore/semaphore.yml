@@ -32,10 +32,21 @@ blocks:
       - Install Dependencies
     task:
       jobs:
-        - name: 'Job #1'
+        - name: 1-tdd
           commands:
             - cache store
             - cd 1-tdd
             - 'export PATH=$PATH:/home/semaphore/.local/bin'
             - pytest test_factorial.py -v
             - pytest test_fibonacci.py -v
+            - cd ..
+  - name: Unit test
+    dependencies:
+      - Run test
+    task:
+      jobs:
+        - name: 2-unit-testing
+          commands:
+            - cd 2-unit-testing
+            - pytest test_math_sum.py -v
+            - cd ..
