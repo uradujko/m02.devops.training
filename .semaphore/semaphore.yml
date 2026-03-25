@@ -13,24 +13,24 @@ auto_cancel:
   queued:
     when: branch = 'main'
 blocks:
-  - name: "\U0001F9EA Test"
+  - name: Install Dependencies
     dependencies: []
     task:
       jobs:
-        - name: "\U0001F7E2 Run Tests"
+        - name: Prepare environment
           commands:
-            - pip install -r requirements.txt
+            - checkout
+            - 'pip install pytest requests flask coverage locust '
+            - cache store
       prologue:
         commands:
           - checkout
-  - name: "\U0001F680 Deploy"
+  - name: Run test
     dependencies:
-      - "\U0001F9EA Test"
+      - Install Dependencies
     task:
       jobs:
-        - name: "\U0001F4E6 Deploy to Production"
+        - name: 'Job #1'
           commands:
-            - echo "Building application..."
-            - echo "Running security checks..."
-            - echo "Deploying to production..."
-            - echo "Deployment completed successfully!"
+            - cache restore
+            - 'cd 1-tdd && python -m pytest test_factorial.py -v '
