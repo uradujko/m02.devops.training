@@ -37,5 +37,5 @@ blocks:
             - cache store
             - cd 1-tdd
             - 'export PATH=$PATH:/home/semaphore/.local/bin'
-            - python -m pytest test_factorial.py -v
-            - python -m pytest test_fibonacci.py -v
+            - pytest test_factorial.py -v
+            - pytest test_fibonacci.py -v
