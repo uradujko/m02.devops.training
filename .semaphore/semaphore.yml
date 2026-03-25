@@ -67,8 +67,7 @@ blocks:
             - cd 4-e2e
             - pip install --cache-dir .pip_cache -r requirements.txt
             - cache store
-            - 'python3.10 app.py& '
-            - sleep 1
+            - nohup python3.10 app.py &
+            - sleep 3
             - pytest test_e2e.py -v
-            - kill -2
             - cd ..
