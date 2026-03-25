@@ -17,7 +17,9 @@ global_job_config:
     commands:
       - checkout
       - 'export PATH=$PATH:/home/semaphore/.local/bin'
-      - pip install pytest requests flask coverage locust
+      - mkdir -p .pip_cache
+      - cache restore
+      - pip install --cache-dir .pip_cache -r requirements.txt
 blocks:
   - name: Install Dependencies
     dependencies: []
@@ -35,4 +37,9 @@ blocks:
       jobs:
         - name: 'Job #1'
           commands:
-            - 'cd 1-tdd && python -m pytest test_factorial.py -v '
+            - cache restore
+            - pip install --cache-dir .pip_cache -r requirements.txt
+            - cache store
+            - cd 1-tdd
+            - python -m pytest test_factorial.py -v
+            - python -m pytest test_fibonacci.py -v
