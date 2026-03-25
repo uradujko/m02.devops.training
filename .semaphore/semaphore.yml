@@ -83,7 +83,7 @@ blocks:
         - name: 5-test-reports
           commands:
             - cd 5-test-reports
-            - sudo apt install venv
+            - sudo apt install python3-venv
             - python -m venv venv
             - source venv/bin/activate
             - pip install --cache-dir .pip_cache -r requirements.txt
