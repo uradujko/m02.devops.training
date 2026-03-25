@@ -1,5 +1,5 @@
 import unittest
-from math_sum import add, subtract, multiply, divide
+from math_sum import add, subtract, multiply, divide, power, modulo
 
 
 class TestMathUtils(unittest.TestCase):
@@ -48,6 +48,26 @@ class TestMathUtils(unittest.TestCase):
     def test_divide_by_zero(self):
         with self.assertRaises(ValueError):
             divide(5, 0)
+
+    def test_power_positive(self):
+        self.assertEqual(power(2, 3), 8)
+
+    def test_power_zero(self):
+        self.assertEqual(power(5, 0), 1)
+
+    def test_power_negative_base(self):
+        self.assertEqual(power(-2, 3), -8)
+
+    def test_power_negative_exponent(self):
+        with self.assertRaises(ValueError):
+            power(2, -1)
+
+    def test_modulo_positive(self):
+        self.assertEqual(modulo(10, 3), 1)
+
+    def test_modulo_by_zero(self):
+        with self.assertRaises(ValueError):
+            modulo(5, 0)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,11 @@
 # define your solution
 def fibonacci(n):
-    pass
+    if n < 0:
+        raise ValueError("Fibonacci is not defined for negative numbers")
+    elif n == 0:
+        return 0
+    elif n == 1:
+        return 1
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
 
