@@ -60,3 +60,13 @@ blocks:
             - cd 3-integration-testing
             - pytest test_integration.py -v
             - cd ..
+  - name: E2E
+    dependencies:
+      - Integration testing
+    task:
+      jobs:
+        - name: 4-e2e
+          commands:
+            - cd 4-e2e
+            - pytest test_e2e.py
+            - cd ..
