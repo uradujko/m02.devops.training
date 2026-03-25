@@ -28,8 +28,7 @@ blocks:
         - name: Prepare environment
           commands: []
   - name: Run test
-    dependencies:
-      - Install Dependencies
+    dependencies: []
     task:
       jobs:
         - name: 1-tdd
@@ -41,8 +40,7 @@ blocks:
             - pytest test_fibonacci.py -v
             - cd ..
   - name: Unit test
-    dependencies:
-      - Run test
+    dependencies: []
     task:
       jobs:
         - name: 2-unit-testing
@@ -51,8 +49,7 @@ blocks:
             - pytest test_math_sum.py -v
             - cd ..
   - name: Integration testing
-    dependencies:
-      - Unit test
+    dependencies: []
     task:
       jobs:
         - name: 3-integration-testing
@@ -72,5 +69,6 @@ blocks:
             - cache store
             - 'python3.10 app.py& '
             - sleep 1
-            - pytest test_e2e.py
+            - pytest test_e2e.py -v
+            - kill -2
             - cd ..
