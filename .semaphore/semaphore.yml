@@ -50,3 +50,13 @@ blocks:
             - cd 2-unit-testing
             - pytest test_math_sum.py -v
             - cd ..
+  - name: Integration testing
+    dependencies:
+      - Unit test
+    task:
+      jobs:
+        - name: 3-integration-testing
+          commands:
+            - cd 3-integration-testing
+            - pytest test_integration.py -v
+            - cd ..
