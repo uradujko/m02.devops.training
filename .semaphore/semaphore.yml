@@ -65,7 +65,12 @@ blocks:
       - Integration testing
     task:
       jobs:
-        - name: 4-e2e
+        - name: 4-e2e run server
+          commands:
+            - cd 4-e2e
+            - python3 app.py
+            - cd ..
+        - name: 4-e2e run test
           commands:
             - cd 4-e2e
             - pytest test_e2e.py
