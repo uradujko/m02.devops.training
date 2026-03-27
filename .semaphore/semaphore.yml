@@ -83,11 +83,16 @@ blocks:
             - pytest --junitxml=report.xml
             - '[[ -f report.xml ]] && test-results publish report.xml'
   - name: Block 5
-    dependencies: []
+    dependencies:
+      - Block 4
     task:
       jobs:
         - name: Test coverage
-          commands: []
+          commands:
+            - cd 7-test-coverage
+            - coverage run -m pytest test_calculator.py -v
+            - coverage report -m
+            - cd ..
 after_pipeline:
   task:
     jobs:
