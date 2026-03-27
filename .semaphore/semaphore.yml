@@ -57,6 +57,8 @@ blocks:
             - cd 6-mocking
             - pytest test_weather_service.py -v
             - cd ..
+            - cd 10-database-testing
+            - pytest test_database.py -v
   - name: Block 4
     dependencies:
       - Block 3
