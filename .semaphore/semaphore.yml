@@ -73,17 +73,6 @@ blocks:
             - sleep 3
             - pytest test_e2e.py -v
             - cd ..
-  - name: Generate test reports
-    dependencies: []
-    task:
-      jobs:
-        - name: 5-test-reports
-          commands:
-            - cd 5-test-reports
-            - pip install --cache-dir .pip_cache -r requirements.txt
-            - pytest test_math_operations.py -v
-            - pytest --junitxml=report.xml
-            - '[[ -f report.xml ]] && test-results publish report.xml'
   - name: Block 5
     dependencies:
       - Block 4
@@ -120,6 +109,18 @@ blocks:
           - sleep 3
           - python -m pytest test_security.py -v
           - cd ..
+  - name: Block 8
+    dependencies:
+      - Block 7
+    task:
+      jobs:
+        - name: Test reporting
+          commands:
+            - cd 5-test-reports
+            - pip install --cache-dir .pip_cache -r requirements.txt
+            - pytest test_math_operations.py -v
+            - pytest --junitxml=report.xml
+            - '[[ -f report.xml ]] && test-results publish report.xml'
 
 after_pipeline:
   task:
