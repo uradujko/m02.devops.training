@@ -75,10 +75,6 @@ blocks:
     dependencies:
       - Install Dependencies
     task:
-      epilogue:
-        always:
-          commands:
-            - 'test-results gen-pipeline-report '
       jobs:
         - name: 5-test-reports
           commands:
@@ -87,3 +83,9 @@ blocks:
             - pytest test_math_operations.py -v
             - pytest --junitxml=report.xml
             - '[[ -f report.xml ]] && test-results publish report.xml'
+after_pipeline:
+  task:
+    jobs:
+      - name: After pipeline job
+        commands:
+          - test-results gen-pipeline-report
