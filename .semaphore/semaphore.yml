@@ -22,17 +22,18 @@ global_job_config:
       - cache restore
       - pip install --cache-dir .pip_cache -r requirements.txt
 blocks:
-  - name: Install Dependencies
+  - name: Block 1
     dependencies: []
     task:
       jobs:
-        - name: Prepare environment
+        - name: Install dependencies
           commands: []
-  - name: Run test
-    dependencies: []
+  - name: Block 2
+    dependencies:
+      - Block 1
     task:
       jobs:
-        - name: 1-tdd
+        - name: Unit tests
           commands:
             - cache store
             - cd 1-tdd
@@ -40,29 +41,28 @@ blocks:
             - pytest test_factorial.py -v
             - pytest test_fibonacci.py -v
             - cd ..
-  - name: Unit test
-    dependencies: []
-    task:
-      jobs:
-        - name: 2-unit-testing
-          commands:
             - cd 2-unit-testing
             - pytest test_math_sum.py -v
             - cd ..
-  - name: Integration testing
-    dependencies: []
+  - name: Block 3
+    dependencies:
+      - Block 2
     task:
       jobs:
-        - name: 3-integration-testing
+        - name: Integration tests
           commands:
             - cd 3-integration-testing
             - pytest test_integration.py -v
             - cd ..
-  - name: E2E
-    dependencies: []
+            - cd 6-mocking
+            - pytest test_weather_service.py -v
+            - cd ..
+  - name: Block 4
+    dependencies:
+      - Block 3
     task:
       jobs:
-        - name: 4-e2e
+        - name: End-to-end tests
           commands:
             - cd 4-e2e
             - pip install --cache-dir .pip_cache -r requirements.txt
@@ -72,8 +72,7 @@ blocks:
             - pytest test_e2e.py -v
             - cd ..
   - name: Generate test reports
-    dependencies:
-      - Install Dependencies
+    dependencies: []
     task:
       jobs:
         - name: 5-test-reports
@@ -83,6 +82,12 @@ blocks:
             - pytest test_math_operations.py -v
             - pytest --junitxml=report.xml
             - '[[ -f report.xml ]] && test-results publish report.xml'
+  - name: Block 5
+    dependencies: []
+    task:
+      jobs:
+        - name: Test coverage
+          commands: []
 after_pipeline:
   task:
     jobs:
