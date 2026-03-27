@@ -93,14 +93,17 @@ blocks:
             - coverage run -m pytest test_calculator.py -v
             - coverage report -m
             - cd ..
-  - name: 'Block #7'
+  - name: 'Block 6'
     dependencies:
       - Block 1
     task:
       jobs:
         - name: 'Job #1'
           commands:
-            - echo test
+            - cd 8-performance-testing
+            - nohup python -c "import sys; sys.path.insert(0, '../4-e2e'); from app import app; app.run()" &
+            - sleep 3
+            - locust -f locustfile.py --host=http://127.0.0.1:5000 --headless -u 10 -r 2 --run-time 30s
 after_pipeline:
   task:
     jobs:
