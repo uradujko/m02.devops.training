@@ -93,6 +93,14 @@ blocks:
             - coverage run -m pytest test_calculator.py -v
             - coverage report -m
             - cd ..
+  - name: 'Block #7'
+    dependencies:
+      - Block 1
+    task:
+      jobs:
+        - name: 'Job #1'
+          commands:
+            - echo test
 after_pipeline:
   task:
     jobs:
